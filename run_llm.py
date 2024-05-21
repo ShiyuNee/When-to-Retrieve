@@ -33,7 +33,7 @@ def get_args():
     parser.add_argument('--idx', type=str, default="")   
     args = parser.parse_args()
     args.ra = ra_dict[args.ra]
-    args.usechat == True if args.model == 'chatgpt' or args.model == 'gpt4' else False
+    args.usechat = True if args.model == 'chatgpt' or args.model == 'gpt4' else False
 
     return args
 
@@ -42,6 +42,7 @@ def main():
 
     args = get_args()
     print(f'Model: {args.model}')
+    print(f'usechat: {args.usechat}')
     begin = 0
     if os.path.exists(args.outfile):
         outfile = open(args.outfile, 'r', encoding='utf-8')
