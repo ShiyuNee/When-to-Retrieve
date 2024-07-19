@@ -1,10 +1,13 @@
-def adaptive_retrieval(model_data, ra_data):
+def adaptive_retrieval_score(model_data, ra_data):
     """
     compute scores for results with adaptive RAG
+    Input:
+        - model_data: data without ra
+        - ra_data: data with ra
     """
     score_list =[]
     for idx in range(len(model_data)):
-        if 'info' in model_data[idx]:
+        if 'has_answer' not in model_data[idx]:
             continue
         if model_data[idx]['Giveup'] == True:
             score_list.append(ra_data[idx]['has_answer']) # append ra results
@@ -12,11 +15,12 @@ def adaptive_retrieval(model_data, ra_data):
             score_list.append(model_data[idx]['has_answer']) # append results without ra
     print(f'count: {len(score_list)}')
     print(f'has_answer: {sum(score_list) / len(score_list)}')
+    return sum(score_list) / len(score_list)
 
 
-def compute_score(data):
+def rag_score(data):
     """
-    compute scores for results with RAG
+    compute scores for results with static RAG
     """
     score_list = []
     em_list = []
@@ -27,6 +31,7 @@ def compute_score(data):
         score_list.append(sample['has_answer'])
     print(f'count: {len(em_list)}')
     print(f'has answer: {sum(score_list) / len(score_list)}')
+    return sum(score_list) / len(score_list)
 
 def compute_giveup_score(data):
     """

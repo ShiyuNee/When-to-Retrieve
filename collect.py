@@ -12,9 +12,10 @@ def get_args():
     parser.add_argument('--source', type=str, default='data/nq_sample.json')
     parser.add_argument('--input', type=str, default='./examples/test.jsonl')
     parser.add_argument('--output', type=str, default='./examples/test_new.jsonl')
+    parser.add_argument('--origin', type=str, default='./examples/test_new.jsonl') # path before ra
     parser.add_argument('--confidence', type=str, default='./examples/confidence.jsonl')
     parser.add_argument('--answer', type=str, default='./examples/answer.jsonl')
-    parser.add_argument('--mode', type=str, default='preprocess', choices=['preprocess', 'evaluate'])
+    parser.add_argument('--mode', type=str, default='preprocess', choices=['preprocess', 'evaluate', 'eval_rag', 'eval_adaptive_rag'])
     args = parser.parse_args()
     return args
 
@@ -36,6 +37,14 @@ if __name__ == '__main__':
     elif args.mode == 'evaluate':
         merge_post_data(args.input, args.output, args.source, args.confidence, args.answer)
         get_score(args.output)
+    
+    elif args.mode == 'eval_rag':
+        data = read_json(args.input)
+        rag_score(data)
+
+    elif args.mode == 'eval_adaptive_rag':
+        merge_post_data(args.input, args.output, args.source, args.confidence, args.answer)
+        adaptive_retrieval_score(args.origin, args.output)
     else:
         print('The mode is wrong')
 

@@ -1,9 +1,9 @@
 import openai
 import time
 from .utils import deal_answer, deal_judge_new, has_answer
+import os
 
-Your_Key='openai-key'
-
+Your_Key=''
 
 model2api = {
     'gpt-instruct': 'gpt-3.5-turbo-instruct',

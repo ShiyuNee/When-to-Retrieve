@@ -57,18 +57,24 @@ python run_llm.py --source data/nq_sample.jsonl --ra [sparse/dense/gold] --type 
 
 ### Adaptive RAG
 
-There are also four steps. The steps are very similar to `Inference`. 
+**Evaluation**
 
-- **Step1**: Run `run_llm.py` to get the basic results
-  - Specify `--ra [sparse/dense/gold]` (`dpr` for `NQ` is ok)
+- `Static RAG`
 
-- **Step2**: Get the indices of samples that do not match the expected output format.
-  - The same
+  ```bash
+  python collect.py \
+  	--mode eval_rag \
+  	--input ./examples/test_gold_static.jsonl
+  ```
 
-- **Step3**: Generate the missing results for these samples.
-  - Specify `--ra`
+- `Adaptive RAG`
 
-- **Step4:** To be continued
+  ```python
+  python collect.py \
+  	--mode eval_adaptive_rag \
+  	--input ./examples/test_gold_static.jsonl \ 
+  	--origin ./examples/test_new.jsonl 
+  ```
 
 ## Note
 
@@ -77,3 +83,17 @@ You can find necessary commands in `scripts/` and the demo data in `examples/`
 > The repository is continuously being updated.
 >
 > Feel free to propose any issue.
+
+## Citation
+
+If you find our paper/repo useful, please cite:
+
+```latex
+@article{ni2024llms,
+  title={When Do LLMs Need Retrieval Augmentation? Mitigating LLMs' Overconfidence Helps Retrieval Augmentation},
+  author={Ni, Shiyu and Bi, Keping and Guo, Jiafeng and Cheng, Xueqi},
+  journal={arXiv preprint arXiv:2402.11457},
+  year={2024}
+}
+```
+
